@@ -14,7 +14,7 @@ public class SetSolution {
     }
 
     public static int analyzeText(String text) {
-        System.out.println("=== Анализ текста из файла ===");
+        System.out.println("Анализ текста из файла:");
         System.out.println("Длина текста: " + text.length() + " символов");
 
         String lowerText = text.toLowerCase();
@@ -25,7 +25,7 @@ public class SetSolution {
                 'х', 'ц', 'ч', 'ш', 'щ', 'ъ', 'ы', 'ь', 'э', 'ю', 'я'
         };
 
-        // Множество для найденных букв
+        // множество для найденных букв
         Set<Character> foundLetters = new HashSet<>();
 
         for (char c : lowerText.toCharArray()) {

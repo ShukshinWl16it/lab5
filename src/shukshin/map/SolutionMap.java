@@ -21,7 +21,7 @@ public class SolutionMap {
                 if (line == null) {
                     break;
                 }
-                String[] parts = line.split("");
+                String[] parts = line.split(" ");
                 if (parts.length != 5) {
                     continue;
                 }
@@ -36,9 +36,8 @@ public class SolutionMap {
                 scores[2] = Integer.parseInt(parts[4]);
                 students.put(fullName, scores);
 
-                // Проверяем условия допуска
                 if (isAdmitted(scores)) {
-                    admitted.add(fullName);
+                    admitted.add(fullName); // проверяем условия допуска
                 }
             }
         }
@@ -60,8 +59,7 @@ public class SolutionMap {
             for (String fullName : admitted) {
                 int[] scores = students.get(fullName);
                 int total = scores[0] + scores[1] + scores[2];
-                System.out.printf("%-25s Баллы: %3d %3d %3d | Сумма: %3d%n",
-                        fullName, scores[0], scores[1], scores[2], total);
+                System.out.println(fullName + " | Баллы: "+ scores[0] +" "+ scores[1]+" " + scores[2] + " | Общая сумма: " + total);
             }
         }
     }

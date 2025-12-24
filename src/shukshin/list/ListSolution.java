@@ -11,14 +11,14 @@ public class ListSolution {
         for (int i = 0; i < L.size(); i++) {
             result.add(L.get(i));
             if (!found && L.get(i) == E) {
-                result.addAll(L1); // Вставляем весь список L1
+                result.addAll(L1); // вставляем весь список L
                 found = true;
             }
         }
         return result;
     }
     public static String ToString(List<Integer> list) {
-        // Просто возвращаем стандартное представление
+        // возвращаем стандартное представление
         return list == null ? "null" : list.toString();
     }
 }

@@ -8,10 +8,10 @@ import shukshin.cat.CountingMeowable;
 import shukshin.cat.Funs;
 import shukshin.list.ListSolution;
 import shukshin.map.SolutionMap;
-import shukshin.set.SetSolution;
+import shukshin.set.*;
 import shukshin.queue.QueueSolution;
 import shukshin.streamPoint.*;
-
+import shukshin.streamPeople.*;
 
 public class Main {
     public static void main(String[] args) {
@@ -49,9 +49,9 @@ public class Main {
                 case 4:
                     SolutionMap solution = new SolutionMap();
                     try {
-                        // Читаем данные из файла
+                        // читаем данные из файла
                         solution.readDataFromFile("stud.txt");
-                        // Выводим результаты
+                        // выводим результаты
                         solution.printResults();
                     } catch (FileNotFoundException e) {
                         System.out.println("Убедитесь, что файл 'stud.txt' существует в текущей директории.");
@@ -60,7 +60,7 @@ public class Main {
                     }
                     break;
                 case 5:
-                    SetSolution sol1 = new SetSolution();// Имя файла с текстом
+                    SetSolution sol1 = new SetSolution();// имя файла с текстом
                     try {
                         String text = sol1.readFile("text.txt");
                         System.out.println("Текст из файла: " + text);
@@ -85,9 +85,9 @@ public class Main {
                     List<Point> points = Arrays.asList(
                         new Point(1, -2),
                         new Point(5, 4),
-                        new Point(1, -2), // Дубликат - должен быть удален
+                        new Point(1, -2), // должен быть удален
                         new Point(2, -5),
-                        new Point(5, 4),  // Дубликат - должен быть удален
+                        new Point(5, 4),  // должен быть удален
                         new Point(-1, 3),
                         new Point(5, 1),
                         new Point(0, -3)
@@ -98,6 +98,20 @@ public class Main {
 
                     break;
                 case 8:
+                    String filename = "people.txt";
+
+                    try {
+                        PeopleSolution processor = new PeopleSolution();
+                        Map<String, List<String>> resultPeople = processor.processFile(filename);
+                        // Выводим результат
+                        System.out.println("Результат группировки:");
+                        resultPeople.forEach((number, names) -> {
+                            System.out.println(number + ": " + names);
+                        });
+
+                    } catch (IOException e) {
+                        System.err.println("Ошибка при чтении файла: " + e.getMessage());
+                    }
                     break;
             }
         }while(choice!=0);

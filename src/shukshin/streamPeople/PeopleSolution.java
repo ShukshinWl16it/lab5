@@ -5,35 +5,36 @@ import java.util.stream.Collectors;
 import java.io.*;
 
 public class PeopleSolution {
-    private List<String> readFileLines(String fileName) throws IOException {
-        List<String> lines = new ArrayList<>();
-
-        try (BufferedReader reader = new BufferedReader(new FileReader(fileName))) {
-            String line;
-            while ((line = reader.readLine()) != null) {
-                if (!line.trim().isEmpty()) {
-                    lines.add(line);
-                }
-            }
+    public Map<String, List<String>> processFile(String filename) throws IOException {
+        try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
+            return reader.lines()
+                    .filter(line -> !line.trim().isEmpty()) // пропускаем пустые строки
+                    .map(this::parseLine)
+                    .filter(Objects::nonNull) // фильтруем null (людей без номеров)
+                    .collect(Collectors.groupingBy(
+                            Person::getNumber,
+                            Collectors.mapping(
+                                    person -> formatName(person.getName()),
+                                    Collectors.toList()
+                            )
+                    ));
         }
-
-        return lines;
     }
 
-    public Map<Integer, List<String>> processFile(String fileName) throws IOException {
-        List<String> lines = readFileLines(fileName);
+    private Person parseLine(String line) {
+        String[] parts = line.split(":", 2);
 
-        return lines.stream()
-                .filter(line -> line.contains(":"))
-                .map(line -> line.split(":", 2))
-                .filter(parts -> parts.length == 2 && !parts[1].trim().isEmpty())
-                .collect(Collectors.groupingBy(
-                        parts -> Integer.parseInt(parts[1].trim()),
-                        Collectors.mapping(
-                                parts -> formatName(parts[0].trim()),
-                                Collectors.toList()
-                        )
-                ));
+        if (parts.length < 2) {
+            return null; // нет номера
+        }
+
+        String name = parts[0].trim();
+        String number = parts[1].trim();
+
+        if (number.isEmpty()) {
+            return null; // номер пустой
+        }
+        return new Person(name, number);
     }
 
     private String formatName(String name) {
@@ -43,7 +44,7 @@ public class PeopleSolution {
 
         String lowerName = name.toLowerCase();
         return lowerName.substring(0, 1).toUpperCase() +
-                lowerName.substring(1);
+                (lowerName.length() > 1 ? lowerName.substring(1) : "");
     }
 
 }
